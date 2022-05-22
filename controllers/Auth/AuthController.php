@@ -22,6 +22,7 @@ class AuthController
 
     public function register($request)
     {
+        $date = new DateTime();
         $password = password_hash($request['password'], PASSWORD_DEFAULT);
 
         $query = $this->db->pdo->prepare('INSERT INTO users (name, last_name, email, password, admin, role_id) VALUES (:name, :last_name, :email, :password, :is_admin, :role)');
@@ -31,6 +32,8 @@ class AuthController
         $query->bindParam(':password', $password);
         $query->bindParam(':is_admin', $request['is_admin']);
         $query->bindParam(':role',$request['selectRole']);
+
+
         $query->execute();
         
         
