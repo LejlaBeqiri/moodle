@@ -7,7 +7,9 @@ class Database
     public function __construct()
     {
         try{
-           session_start();
+
+                // session_start(); 
+            
            $link = new PDO('mysql:host=localhost;dbname=moodle', 'root', '');
             $this->pdo = $link;
         }catch(PDOException $e) {
@@ -17,9 +19,3 @@ class Database
 }
 ?>
 
-
-
-<!-- if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    }  -->

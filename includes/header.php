@@ -1,4 +1,7 @@
-<?php include('includes/current_page.php');?>
+<?php include('includes/current_page.php');
+
+session_start();
+?>
 
 
 

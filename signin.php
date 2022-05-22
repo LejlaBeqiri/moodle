@@ -4,14 +4,17 @@
 
 require './controllers/Auth/AuthController.php';
 
+session_start();
 $user = new AuthController;
 $msg ='';$msg2='';$msg3='';
 $email='';$password='';
+
 
 if(isset($_POST['submitted'])) {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
+
 
     if(empty($email)||empty($password))
     {
@@ -21,22 +24,10 @@ if(isset($_POST['submitted'])) {
     {
         $msg2 ="<div class='signUperror'>This email doesn't exists !</div>";
     }
-    if($user->emailExists($email))
-    {
-        $pass = mysqli_query($db,"SELECT password FROM users WHERE email ='$email'");
-        $pass_w = mysqli_fetch_array($pass);
-        $dpass = $pass_w['password'];
-        //$password = password_hash($password , PASSWORD_DEFAULT);
-        if(!password_verify($password , $dpass))
-        {
-           $msg3 ="<div class='signUperror'>Password is incorrect !</div>";
-        }else
-        {
-            $user->login($_POST);
-            $_SESSION['email']=$_POST['email'];
-        }
-        
-    }
+    $request['email'] = $email;
+    $request['password'] = $password;
+    
+    $user->login($request);
 }
 
 ?>

@@ -225,6 +225,22 @@ nav ul li a:hover{
 
 /*SignIn css */
 
+.signupForm select{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    height: 30px;
+    border:solid 2px #1a61ff;
+    font-size:20px;
+    color:black;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: left;
+    transition:all 250ms ease;
+}
+
 .signIncontanier{
     background-size: 100%;
     background-repeat: no-repeat;
@@ -361,6 +377,9 @@ transition: all 200ms ease;
     font-family: 'Segoe UI';
     color:#fff;
 }
+
+
+
 
 
 /*Footer styles*************************************************************/

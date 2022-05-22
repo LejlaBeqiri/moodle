@@ -10,6 +10,6 @@ class RoleController{
 
     public function all(){        
         $query = $this->role->pdo->query('SELECT * FROM roles');
-        return json_encode($query->fetchAll());
+        return $query->fetchAll();
     }
 }
