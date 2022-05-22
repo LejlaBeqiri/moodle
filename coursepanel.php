@@ -10,11 +10,9 @@
 <?php 
     $edit_state = false;
     require './controllers/Course/CourseController.php';
+
     
     $course = new CourseController;
-    $db = mysqli_connect('localhost','root','','dnotes');
-    $results = mysqli_query($db,"SELECT * FROM courses");
-    $category_results = mysqli_query($db,"SELECT * FROM category");
     $course_id =0;
 
     
@@ -30,7 +28,7 @@
     //course_id qe fitohet prej edit butonit, perdoret prej metodes update($course_id,$_POST)
     if(isset($_GET['edit'])){
         $course_id = $_GET['edit'];
-        $title= $_GET['title'];
+        $name= $_GET['name'];
         $edit_state = true;
     }
 
@@ -55,13 +53,88 @@
 <body>
 
 
-    <?php include('includes/dashboard_navigation.php');?>
-        <table>
-            <thead>
-                <tr>
-                    <th style = "font-size:25px">Course</th>
-                    <th style = "font-size:25px">Category</th>                    
-                    <th class ="actionclass" colspan = "2">Action</th>
-                </tr>
-            </thead>
-            <tbody>
+<?php include('includes/dashboard_navigation.php');?>
+<table>
+    <thead>
+        <tr>
+            <th style = "font-size:25px">Course</th>
+            <th style = "font-size:25px">Professor</th>                    
+            <th style = "font-size:25px">Semester</th>                    
+            <th class ="actionclass" colspan = "2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($course->all() as $row ){ ?>
+            <tr>
+            <td><?php echo $row['name'] ?></td>
+            <td>
+                <?php 
+                   $prof = $course->professor($row['professor_id'])[0];
+      
+                   echo $prof['name'];
+
+                ?>
+            </td>
+            <td>
+            <?php 
+                echo $row['semester'];       
+            ?>
+            </td>
+            <td class ="editclass">
+                <a class ="edit_btn" href="coursepanel.php?edit=<?php echo $row['id']; ?>&name=<?php echo $row['name']?>&semester=<?php echo $row['semester'] ?>">Edit</a>
+            </td>
+            <td class ="updateclass">
+            <a class ="del_btn" href="coursepanel.php?del=<?php echo $row['id']; ?>">Delete</a>
+            </td>
+        </tr>
+        <?php } ?>
+        
+    </tbody>
+    </table>
+    <form method="post" action ="">
+            <input type ="hidden" name="course_id" value="<?php echo $course_id; ?>">
+            <input type ="hidden" name="name" value="<?php echo $name; ?>">
+
+            <div class ="input-group">
+                <label>Course Title</label>
+                <input type="text" value="<?php echo $currentCourse['name']; ?>" name="coursename">
+
+                <label>Professor</label>
+                <select name = "selectCategory">
+                    <?echo 'here';?>
+                        <?php foreach($course->professors() as $row ){ ?>
+                            <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
+                    
+                        <?php } ?>
+                </select>   
+                <label>Semester</label>
+                <select name = "selectCategory">
+                    <option value="1">Semester 1</option>
+                    <option value="2">Semester 2</option>
+                    <option value="3">Semester 3</option>
+                    <option value="4">Semester 4</option>
+                    <option value="5">Semester 5</option>
+                    <option value="6">Semester 6</option>
+                </select>
+            </div>
+            
+                <div class ="input-group">
+
+                    <?php //nese nuk editon    ?>
+
+                    <?php if($edit_state == false):?>
+                   
+                       
+
+                    <button type="submit" name="save" class="btn">Save</button>
+                    
+                    <?php //nese editon?>
+                    
+                    <?php else:?>
+                   
+                        <button type="submit" name="update" class="btn">Update</button>
+                    <?php endif ?>
+                </div>
+            </form>
+</body>
+</html>

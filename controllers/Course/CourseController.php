@@ -56,13 +56,34 @@ class CourseController{
 
 
     public function destroy($cid)
-{
-    $query = $this->course->pdo->prepare('DELETE FROM courses WHERE course_id = :cid');
-    $query->execute(['cid' => $cid]);
+    {
+        $query = $this->course->pdo->prepare('DELETE FROM courses WHERE course_id = :cid');
+        $query->execute(['cid' => $cid]);
 
-    
-    return header('Location: ./coursespanel.php');
-}
+        
+        return header('Location: ./coursespanel.php');
+    }
+
+    public function professor($id){
+        $query=$this->course->pdo->prepare('SELECT name FROM users where id=:id');
+        $query->bindParam(':id', $id);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function professors()
+    {
+        $query = $this->course->pdo->query('SELECT * FROM users WHERE role_id = 1');
+
+        return $query->fetchAll();
+    }
+
+    public function students()
+    {
+        $query = $this->course->pdo->query('SELECT * FROM users WHERE role_id = 1');
+
+        return $query->fetchAll();
+    }
 
 
 
