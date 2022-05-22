@@ -27,8 +27,8 @@ class CourseController{
         
         $query = $this->course->pdo->prepare('INSERT INTO courses (name,semester, professor_id) VALUES (:name,:semester,:professor_id)');
         $query->bindParam(':name', $request['coursename']);
-        $query->bindParam(':semester', $request['semester']);
-        $query->bindParam(':professor_id', $request['professor_id']);
+        $query->bindParam(':semester', $request['selectSemester']);
+        $query->bindParam(':professor_id', $request['selectProfessor']);
 
         $query->execute();
     
@@ -44,24 +44,24 @@ class CourseController{
 
     public function update($course_id, $request)
     {
-        $query = $this->course->pdo->prepare('UPDATE courses SET title = :cname, category =:cid WHERE course_id = :id');
-        $query->execute([
-            'cname' => $request['coursename'],
-            'cid' => $request['selectCategory'],
-            'id'=> $course_id
-        ]);
+        $query = $this->course->pdo->prepare('UPDATE courses SET name = :name, semester =:semester, professor_id =:professor_id  WHERE id = :id');
+        $query->bindParam(':name', $request['coursename']);
+        $query->bindParam(':semester', $request['selectSemester']);
+        $query->bindParam(':professor_id', $request['selectProfessor']);
+        $query->bindParam(':id', $course_id);
+        $query->execute();
 
-        return header('Location: ./coursespanel.php');
+        return header('Location: ./coursepanel.php');
     }
 
 
     public function destroy($cid)
     {
-        $query = $this->course->pdo->prepare('DELETE FROM courses WHERE course_id = :cid');
+        $query = $this->course->pdo->prepare('DELETE FROM courses WHERE id = :cid');
         $query->execute(['cid' => $cid]);
 
         
-        return header('Location: ./coursespanel.php');
+        return header('Location: ./coursepanel.php');
     }
 
     public function professor($id){

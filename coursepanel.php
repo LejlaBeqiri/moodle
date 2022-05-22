@@ -8,6 +8,7 @@
 ?>
 
 <?php 
+    $name = '';
     $edit_state = false;
     require './controllers/Course/CourseController.php';
 
@@ -18,11 +19,11 @@
     
     if(isset($_POST['save'])){
         $course->store($_POST);
-        header('Location: ./coursespanel.php');
+        header('Location: ./coursepanel.php');
     }
     if(isset($_GET['del'])){
         $course->destroy($_GET["del"]);
-        header('Location: ./coursespanel.php');
+        header('Location: ./coursepanel.php');
     }
 
     //course_id qe fitohet prej edit butonit, perdoret prej metodes update($course_id,$_POST)
@@ -33,6 +34,7 @@
     }
 
     //permban kursin qe do te editohet
+  
     $currentCourse = $course->edit($course_id);
 
   //$course_id id e rreshtit qe editohet
@@ -97,10 +99,10 @@
 
             <div class ="input-group">
                 <label>Course Title</label>
-                <input type="text" value="<?php echo $currentCourse['name']; ?>" name="coursename">
+                <input type="text" value="<?php echo $name; ?>" name="coursename">
 
                 <label>Professor</label>
-                <select name = "selectCategory">
+                <select name = "selectProfessor">
                     <?echo 'here';?>
                         <?php foreach($course->professors() as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
@@ -108,7 +110,7 @@
                         <?php } ?>
                 </select>   
                 <label>Semester</label>
-                <select name = "selectCategory">
+                <select name = "selectSemester">
                     <option value="1">Semester 1</option>
                     <option value="2">Semester 2</option>
                     <option value="3">Semester 3</option>
@@ -120,7 +122,7 @@
             
                 <div class ="input-group">
 
-                    <?php //nese nuk editon    ?>
+     
 
                     <?php if($edit_state == false):?>
                    
@@ -128,7 +130,7 @@
 
                     <button type="submit" name="save" class="btn">Save</button>
                     
-                    <?php //nese editon?>
+                 
                     
                     <?php else:?>
                    
