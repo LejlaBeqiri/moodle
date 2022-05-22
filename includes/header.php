@@ -21,27 +21,41 @@ session_start();
             <a href ="index.php"><img src="images/logo2.png"></a>
         </div>
         <div>
-            <p style="color: #fb670e;
-    font-size: 22px;"><?php if(isset($_SESSION['name'])){
-                echo 'Welcome ' . $_SESSION['name'];} ?></p>
+            <p style="color: #fb670e; font-size: 22px;">
+                <?php if(isset($_SESSION['name'])){
+                    echo 'Welcome ' . $_SESSION['name'];}
+                    ?>
+            </p>
         </div>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="categories.php">Categories</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <?php ?>
+
+                <?php if(isset($_SESSION['role']) && $_SESSION['role']== 1 ){?>
+     
+                    <li><a href="courses.php">Courses</a></li>
+                    <li><a href="assignments.php">Assignments</a></li>
+                    <li><a href="admindashboard.php">Dashboard</a></li>
+                <?php }?>
+
+                <?php if(isset($_SESSION['role']) && $_SESSION['role']== 2 ){?>
+                    
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="courses.php">Courses</a></li>
+                    <li><a href="homework.php">Homework</a></li>
+                    <li><a href="upload.php">Upload</a></li>
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="faq.php">FAQ</a></li>
+                <?php }?>
+
                 <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']==1){?>
                     <li><a href="admindashboard.php">Dashboard</a></li>
                 <?php }?>
                 <?php if(isset($_SESSION['name'])){?>
-                    
-                    <li><a  href="userpost.php" name="upload">Upload</a></li>
-                    <li><a  href="postspanel.php" name="upload">Manage Posts</a></li>
                     <li><a class="button1" href="logout.php" type="submit" name="logout">Log Out</a></li>
 
                 <?php  } else{?>
-                <li><a  href="signup.php" name="upload">Upload</a></li>
+                <li><a  href="signup.php" name="upload">Sign Up</a></li>
                 <li><a class="button1" href="signin.php">Sign in</a></li>
                 <?php }?>
             </ul>
@@ -52,7 +66,7 @@ session_start();
     <?php
         
         //kodi qe e shfaq shiritin me emer t'faqes
-        $home='/notes/index.php';
+        $home='/moodle/index.php';
         if($currentPage!=$home){
             include('includes/page_title.php');
         }

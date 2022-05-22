@@ -22,12 +22,17 @@ if(isset($_POST['submitted'])) {
     }
     if(!($user->emailExists($email)))
     {
-        $msg2 ="<div class='signUperror'>This email doesn't exists !</div>";
+        $msg2 ="<div class='signUperror'>This email doesn't exist !</div>";
     }
     $request['email'] = $email;
     $request['password'] = $password;
     
-    $user->login($request);
+    try{
+        $user->login($request);
+    }catch(AuthException $e){
+        $msg3 ="<div class='signUperror'>Wrong Credentials !</div>";
+        $e->getMessage();
+    }
 }
 
 ?>
@@ -59,7 +64,6 @@ if(isset($_POST['submitted'])) {
                     <p>Type Password</p>
                     <input class="inp" type="password" name="password"><br>
                     <?php echo $msg3; ?>
-                    <!-- <a href="" class="he">Forgot your password ?</a><br/> -->
                     <a href="signup.php" class="he">Create an account ?</a><br/>
                     <input class="subSignIN" type="submit" name="submitted" value="Log In">
 

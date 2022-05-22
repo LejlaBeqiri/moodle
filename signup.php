@@ -34,10 +34,10 @@
         {
             $msg2 = "<div class='signUperror'>This email is already taken !</div>";
         }
-        // elseif(strlen($password)<8)
-        // {
-        //     $msg3 = "<div class='signUperror'>Password must contain atleast 8 characters !</div>";
-        // }
+        elseif(strlen($password)<8)
+        {
+            $msg3 = "<div class='signUperror'>Password must contain atleast 8 characters !</div>";
+        }
         elseif($password !== $repeatpassword)
         {
             $msg4 = "<div class='signUperror'>Password doesn't match !</div>";
@@ -87,7 +87,7 @@
                     </select>   
 
                     <p id="selectTitle">Enter Professor ID</p>
-                    <input class="inp" type="email" name="email"  value = '<?php echo $email; ?>' ><br>
+                    <input class="inp" type="text" name="document_id"  value = '<?php echo $email; ?>' ><br>
                     <?php echo $msg2; ?>
 
                     <p>Type Password</p>

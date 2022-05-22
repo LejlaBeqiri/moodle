@@ -1,6 +1,7 @@
 <?php
 
 include './core/Database.php';
+require './Exceptions/AuthException.php';
 
 
 class AuthController
@@ -38,29 +39,30 @@ class AuthController
     public function login($request)
     {
         
-        $query = $this->db->pdo->prepare('SELECT id, name, last_name, email, password, role_id FROM users WHERE email = :email');
+        $query = $this->db->pdo->prepare('SELECT id, name, last_name, email, password, role_id, admin FROM users WHERE email = :email');
         $query->bindParam(':email', $request['email']);
         $query->execute();
 
         $user = $query->fetch();
 
 
-
-        if(count($user) > 0 && password_verify($request['password'], $user['password']) && $user['is_admin']==1){
+        if( $user && password_verify($request['password'], $user['password']) && $user['admin']==1){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['name'] = $user['name'];
-            $_SESSION['is_admin'] = $user['is_admin'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['is_admin'] = $user['admin'];
+            $_SESSION['role'] = $user['role_id'];
         
             header("Location: ./admindashboard.php");
         }
-        elseif(count($user) > 0 && password_verify($request['password'], $user['password']) && $user['is_admin']==0){
+        elseif($user && password_verify($request['password'], $user['password']) && $user['admin']==0){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['name'] = $user['name'];
-            $_SESSION['is_admin'] = $user['is_admin'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['is_admin'] = $user['admin'];
+            $_SESSION['role'] = $user['role_id'];
 
             header("Location: ./index.php");
         }
+        throw new AuthException('Wrong credentials',422);
+        header("Location: ./signin.php");
     }
 }

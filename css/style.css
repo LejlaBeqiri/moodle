@@ -374,8 +374,12 @@ transition: all 200ms ease;
 }
 
 .signUperror{
-    font-family: 'Segoe UI';
-    color:#fff;
+  
+    color:#a30000;
+    font-weight: bold;
+    font-family:inherit;
+    font-size: 22px;
+    /* text-decoration: underline dotted red; */
 }
 
 
