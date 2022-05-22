@@ -8,6 +8,9 @@
         case "/moodle/courses.php":
             $title='Courses';
             break;
+        case "/moodle/assignments.php":
+            $title='Assignments';
+            break;
         case "/moodle/homework.php":
             $title='Homework';
         break;

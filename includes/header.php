@@ -35,7 +35,7 @@ session_start();
      
                     <li><a href="courses.php">Courses</a></li>
                     <li><a href="assignments.php">Assignments</a></li>
-                    <li><a href="admindashboard.php">Dashboard</a></li>
+
                 <?php }?>
 
                 <?php if(isset($_SESSION['role']) && $_SESSION['role']== 2 ){?>

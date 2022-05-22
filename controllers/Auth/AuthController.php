@@ -55,7 +55,7 @@ class AuthController
             $_SESSION['is_admin'] = $user['admin'];
             $_SESSION['role'] = $user['role_id'];
         
-            header("Location: ./admindashboard.php");
+            header("Location: ./index.php");
         }
         elseif($user && password_verify($request['password'], $user['password']) && $user['admin']==0){
             $_SESSION['user_id'] = $user['id'];

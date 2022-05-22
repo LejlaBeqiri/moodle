@@ -113,6 +113,7 @@ margin-top: 50px;
 
 
 
+
 /*Slider*/
 @keyframes slider {
     0% { left: 0%; }     
@@ -478,3 +479,85 @@ transition: all 200ms ease;
 
 
 /*Footer styles ends here*********************************************************/
+
+
+table{
+    width: 50%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: fixed;
+}
+tr{
+    border-bottom: 1px solid #cbcbcb;
+}
+
+th,td{
+    border:none;
+    height:30px;
+    padding:2px;
+    overflow: hidden;
+}
+tr:hover{
+    background: #f5f5f5;
+}
+
+form{
+    width:45%;
+    margin: 50px auto;
+    text-align:left;
+    padding:20px;
+    border:1px solid #bbbb;
+    border-radius: 5px;
+}
+
+.input-group{
+    margin:10px 0px 10px 0px;
+}
+.input-group label{
+    display: block;
+    text-align: left;
+    margin: 3px;
+}
+.input-group input{
+    height:30px;
+    width:93%;
+    padding:5px 10px;
+    font-size:16px;
+    border-radius:5px;
+    border:1px solid gray;
+}
+.btn{
+    padding:10px;
+    font-size:15px;
+    color:white;
+    background: #1A61F9;
+    border:none;
+    border-radius: 5px;
+}
+.edit_btn{
+    text-decoration: none;
+    padding: 2px 5px;
+    background: green;
+    color:white;
+    border-radius: 3px;
+}
+
+.del_btn{
+    text-decoration: none;
+    padding: 2px 5px;
+    background: #800000;
+    color:white;
+    border-radius: 3px;
+}
+
+.actionclass{
+    text-align: center;
+    font-size:25px;
+}
+.editclass{
+    text-align: right;
+}
+.updateclass{
+    text-align:left;
+}

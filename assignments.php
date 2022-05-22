@@ -1,78 +1,78 @@
 <?php
- include('includes/current_page.php');
-
-    session_start();
+    include('./includes/header.php');
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
     if($_SESSION['role']==2){
         header("Location: ./index.php");
 
-   }
-?>
+    }
 
-<?php 
     $name = '';
     $edit_state = false;
-    require './controllers/Course/CourseController.php';
+    require './controllers/Assignment/AssignmentController.php';
 
     
-    $course = new CourseController;
+    $asm = new AssignmentController;
     $course_id =0;
 
     
     if(isset($_POST['save'])){
         $course->store($_POST);
-        header('Location: ./coursepanel.php');
+        header('Location: ./assignments.php');
     }
     if(isset($_GET['del'])){
         $course->destroy($_GET["del"]);
-        header('Location: ./coursepanel.php');
+        header('Location: ./assignments.php');
     }
 
-    //course_id qe fitohet prej edit butonit, perdoret prej metodes update($course_id,$_POST)
+   
     if(isset($_GET['edit'])){
         $course_id = $_GET['edit'];
         $name= $_GET['name'];
         $edit_state = true;
     }
 
-    //permban kursin qe do te editohet
   
-    $currentCourse = $course->edit($course_id);
+    $currentCourse = $asm->edit($course_id);
 
-  //$course_id id e rreshtit qe editohet
     if(isset($_POST['update'])){
         $course->update($course_id,$_POST);
     }
     
 ?>
+
+
 <!DOCTYPE html>
 <html>
-    <head>
-         
-        <link rel="stylesheet" type="text/css" href="css/styleadminpannel.css">
+    <head> 
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
     </head>
 <body>
 
 
-<?php include('includes/dashboard_navigation.php');?>
 <table>
     <thead>
         <tr>
-            <th style = "font-size:25px">Course</th>
-            <th style = "font-size:25px">Professor</th>                    
-            <th style = "font-size:25px">Semester</th>                    
+            <th style = "font-size:25px">Title</th>
+            <th style = "font-size:25px">Description</th>                    
+            <th style = "font-size:25px">Course</th>                    
+            <th style = "font-size:25px">Due</th>                    
             <th class ="actionclass" colspan = "2">Action</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($course->all() as $row ){ ?>
+
+        <?php print_r($asm->all())?>
+        <?php foreach($asm->all() as $row ){ ?>
             <tr>
-            <td><?php echo $row['name'] ?></td>
+            <td><?php echo $row['title'] ?></td>
             <td>
                 <?php 
-                   $prof = $course->professor($row['professor_id'])[0];
+                   $prof = $asm->professor($row['professor_id'])[0];
       
                    echo $prof['name'];
 
@@ -105,7 +105,7 @@
                 <label>Professor</label>
                 <select name = "selectProfessor">
                     <?echo 'here';?>
-                        <?php foreach($course->professors() as $row ){ ?>
+                        <?php foreach($asm->professors() as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
                     
                         <?php } ?>
