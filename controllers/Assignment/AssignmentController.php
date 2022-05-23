@@ -13,12 +13,14 @@ class AssignmentController{
     {
       
         $query = $this->asm->pdo->prepare('
-            SELECT p.title, p.description, p.due, c.name
+            SELECT p.id, p.title, p.description, p.due, c.name
             FROM professor_assignment p
             INNER JOIN courses c
             ON p.course_id = c.id
-            WHERE p.id = :user_id
+            WHERE p.professor_id = :user_id
         ');
+
+        
          $query->bindParam(':user_id', $user_id);
          $query->execute();
 
@@ -90,6 +92,14 @@ class AssignmentController{
     public function students()
     {
         $query = $this->asm->pdo->query('SELECT * FROM users WHERE role_id = 1');
+
+        return $query->fetchAll();
+    }
+
+
+    public function courses()
+    {
+        $query = $this->asm->pdo->query('SELECT * FROM courses');
 
         return $query->fetchAll();
     }

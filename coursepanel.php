@@ -63,33 +63,33 @@
             <th style = "font-size:25px">Course</th>
             <th style = "font-size:25px">Professor</th>                    
             <th style = "font-size:25px">Semester</th>                    
-            <th class ="actionclass" colspan = "2">Action</th>
+            <th class ="actionclass"  colspan= "2">Action</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach($course->all() as $row ){ ?>
             <tr>
-            <td><?php echo $row['name'] ?></td>
-            <td>
-                <?php 
-                   $prof = $course->professor($row['professor_id'])[0];
-      
-                   echo $prof['name'];
+                <td><?php echo $row['name'] ?></td>
+                <td>
+                    <?php 
+                    $prof = $course->professor($row['professor_id'])[0];
+        
+                    echo $prof['name'];
 
+                    ?>
+                </td>
+                <td>
+                <?php 
+                    echo $row['semester'];       
                 ?>
-            </td>
-            <td>
-            <?php 
-                echo $row['semester'];       
-            ?>
-            </td>
-            <td class ="editclass">
-                <a class ="edit_btn" href="coursepanel.php?edit=<?php echo $row['id']; ?>&name=<?php echo $row['name']?>&semester=<?php echo $row['semester'] ?>">Edit</a>
-            </td>
-            <td class ="updateclass">
-            <a class ="del_btn" href="coursepanel.php?del=<?php echo $row['id']; ?>">Delete</a>
-            </td>
-        </tr>
+                </td>
+                <td class ="editclass">
+                    <a class ="edit_btn" href="coursepanel.php?edit=<?php echo $row['id']; ?>&name=<?php echo $row['name']?>&semester=<?php echo $row['semester'] ?>">Edit</a>
+                </td>
+                <td class ="updateclass">
+                    <a class ="del_btn" href="coursepanel.php?del=<?php echo $row['id']; ?>">Delete</a>
+                </td>
+            </tr>
         <?php } ?>
         
     </tbody>
@@ -104,7 +104,6 @@
 
                 <label>Professor</label>
                 <select name = "selectProfessor">
-                    <?echo 'here';?>
                         <?php foreach($course->professors() as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
                     
@@ -122,19 +121,9 @@
             </div>
             
                 <div class ="input-group">
-
-     
-
                     <?php if($edit_state == false):?>
-                   
-                       
-
-                    <button type="submit" name="save" class="btn">Save</button>
-                    
-                 
-                    
+                        <button type="submit" name="save" class="btn">Save</button>
                     <?php else:?>
-                   
                         <button type="submit" name="update" class="btn">Update</button>
                     <?php endif ?>
                 </div>

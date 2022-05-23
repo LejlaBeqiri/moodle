@@ -4,12 +4,13 @@
     { 
         session_start(); 
     } 
-    if($_SESSION['role']==2){
+    if(isset($_SESSION['role']) && $_SESSION['role']==2){
         header("Location: ./index.php");
-
     }
 
-    $name = '';
+    $title= '';
+    $description = '';
+    $due = '';
     $edit_state = false;
     require './controllers/Assignment/AssignmentController.php';
 
@@ -19,18 +20,20 @@
 
     
     if(isset($_POST['save'])){
-        $course->store($_POST);
+        $asm->store($_POST);
         header('Location: ./assignments.php');
     }
     if(isset($_GET['del'])){
-        $course->destroy($_GET["del"]);
+        $asm->destroy($_GET["del"]);
         header('Location: ./assignments.php');
     }
 
    
     if(isset($_GET['edit'])){
-        $course_id = $_GET['edit'];
-        $name= $_GET['name'];
+        $assignmet_id = $_GET['edit'];
+        $title= $_GET['title'];
+        $description= $_GET['description'];
+        $due= $_GET['due'];
         $edit_state = true;
     }
 
@@ -66,15 +69,14 @@
     </thead>
     <tbody>
 
-        
+ <div class="
+ "></div>
         <?php foreach($asm->all($_SESSION['user_id']) as $row ){ ?>
             <tr>
             <td><?php echo $row['title'] ?></td>
             <td>
                 <?php 
-        
                    echo $row['description'];
-
                 ?>
             </td>
             <td>
@@ -85,7 +87,12 @@
             <td>
                 <?php echo $row['due'];?>
             </td>
-
+            <td class ="editclass">
+                <a class ="edit_btn" href="assignments.php?edit=<?php echo $row['id']; ?>&title=<?php echo $row['title']?>&description=<?php echo $row['description'] ?> &due=<?php echo $row['due'] ?>">Edit</a>
+            </td>   
+            <td class ="updateclass">
+            <a class ="del_btn" href="assignments.php?del=<?php echo $row['id']; ?>">Delete</a>
+            </td>
 
         </tr>
         <?php } ?>
@@ -97,42 +104,27 @@
             <input type ="hidden" name="name" value="<?php echo $name; ?>">
 
             <div class ="input-group">
-                <label>Course Title</label>
-                <input type="text" value="<?php echo $name; ?>" name="coursename">
+                <label>Assignment Title</label>
+                <input type="text" value="<?php echo $title; ?>" name="title">
 
-                <label>Professor</label>
+                <label> Description</label>
+                <input type="text" value="<?php echo $description; ?>" name="description">
+
+                <label>Course</label>
                 <select name = "selectProfessor">
-                    <?echo 'here';?>
-                        <?php foreach($asm->professors() as $row ){ ?>
+                        <?php foreach($asm->courses() as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
                     
                         <?php } ?>
                 </select>   
-                <label>Semester</label>
-                <select name = "selectSemester">
-                    <option value="1">Semester 1</option>
-                    <option value="2">Semester 2</option>
-                    <option value="3">Semester 3</option>
-                    <option value="4">Semester 4</option>
-                    <option value="5">Semester 5</option>
-                    <option value="6">Semester 6</option>
-                </select>
+                <label>Due</label>
+                <input type="datetime-local" value="<?php echo $description; ?>" name="description">
             </div>
             
                 <div class ="input-group">
-
-     
-
                     <?php if($edit_state == false):?>
-                   
-                       
-
-                    <button type="submit" name="save" class="btn">Save</button>
-                    
-                 
-                    
+                        <button type="submit" name="save" class="btn">Save</button>
                     <?php else:?>
-                   
                         <button type="submit" name="update" class="btn">Update</button>
                     <?php endif ?>
                 </div>
