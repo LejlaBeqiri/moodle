@@ -49,7 +49,7 @@ class AssignmentController{
     }
 
     public function edit($id){
-        $query = $this->asm->pdo->prepare('SELECT * FROM courses WHERE id = :id');
+        $query = $this->asm->pdo->prepare('SELECT * FROM professor_assignment WHERE id = :id');
         $query->execute(['id' => $id]);
 
         return $query->fetch();

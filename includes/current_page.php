@@ -19,10 +19,13 @@
             break;
         case "/moodle/.php":
             $title='Sign In';
-            break;
-            case "/moodle/signup.php":
-                $title='Sign Up';
-            break;
+        break;
+        case "/moodle/signup.php":
+            $title='Sign Up';
+        break;
+        case "/moodle/coursepanel.php":
+            $title='Course Panel';
+        break;
         default:
             $title= "Moodle";
     }

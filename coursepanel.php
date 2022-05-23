@@ -1,7 +1,6 @@
 <?php
  include('includes/current_page.php');
 
-    session_start();
     if(isset($_SESSION['role']) && $_SESSION['role']==2){
         header("Location: ./index.php");
 
@@ -48,7 +47,7 @@
 <html>
     <head>
          
-        <link rel="stylesheet" type="text/css" href="css/styleadminpannel.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
@@ -56,7 +55,7 @@
 <body>
 
 
-<?php include('includes/dashboard_navigation.php');?>
+<?php include('includes/header.php');?>
 <table>
     <thead>
         <tr>
@@ -95,20 +94,13 @@
     </tbody>
     </table>
     <form method="post" action ="">
-            <input type ="hidden" name="course_id" value="<?php echo $course_id; ?>">
+            <input type ="hidden" name="selectProfessor" value="<?php echo $_SESSION['user_id']; ?>">
             <input type ="hidden" name="name" value="<?php echo $name; ?>">
 
             <div class ="input-group">
                 <label>Course Title</label>
                 <input type="text" value="<?php echo $name; ?>" name="coursename">
-
-                <label>Professor</label>
-                <select name = "selectProfessor">
-                        <?php foreach($course->professors() as $row ){ ?>
-                            <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
-                    
-                        <?php } ?>
-                </select>   
+                 
                 <label>Semester</label>
                 <select name = "selectSemester">
                     <option value="1">Semester 1</option>
