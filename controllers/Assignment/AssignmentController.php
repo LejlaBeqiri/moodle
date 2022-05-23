@@ -56,22 +56,27 @@ class AssignmentController{
         }
 
 
-    public function update($course_id, $request)
+    public function update($assignment_id, $request)
     {
-        $query = $this->asm->pdo->prepare('UPDATE courses SET name = :name, semester =:semester, professor_id =:professor_id  WHERE id = :id');
-        $query->bindParam(':name', $request['coursename']);
-        $query->bindParam(':semester', $request['selectSemester']);
-        $query->bindParam(':professor_id', $request['selectProfessor']);
-        $query->bindParam(':id', $course_id);
+      
+        $query = $this->asm->pdo->prepare('UPDATE professor_assignment SET title = :title, description =:description, professor_id =:professor_id, course_id=:course_id, due=:due  WHERE id = :id');
+        $query->bindParam(':title', $request['title']);
+        $query->bindParam(':description', $request['description']);
+        $query->bindParam(':professor_id', $request['user_id']);
+        $query->bindParam(':course_id', $request['selectCourse']);
+        $query->bindParam(':due', $request['due']);
+        $query->bindParam(':id', $assignment_id);
+
+       
         $query->execute();
 
-        return header('Location: ./coursepanel.php');
+        return header('Location: ./assignments.php');
     }
 
 
     public function destroy($cid)
     {
-        $query = $this->asm->pdo->prepare('DELETE FROM courses WHERE id = :cid');
+        $query = $this->asm->pdo->prepare('DELETE FROM professor_assignment WHERE id = :cid');
         $query->execute(['cid' => $cid]);
 
         

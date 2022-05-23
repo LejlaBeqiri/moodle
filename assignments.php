@@ -42,7 +42,7 @@
     $currentCourse = $asm->edit($assignment_id);
 
     if(isset($_POST['update'])){
-        $asm->update($course_id,$_POST);
+        $asm->update($assignment_id,$_POST);
     }
     
 ?>
@@ -103,6 +103,7 @@
     <form method="post" action ="">
 
             <input type ="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+
 
             <div class ="input-group">
                 <label>Assignment Title</label>
