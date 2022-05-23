@@ -8,6 +8,7 @@
         header("Location: ./index.php");
     }
 
+    $assignment_id='';
     $title= '';
     $description = '';
     $due = '';
@@ -30,7 +31,7 @@
 
    
     if(isset($_GET['edit'])){
-        $assignmet_id = $_GET['edit'];
+        $assignment_id = $_GET['edit'];
         $title= $_GET['title'];
         $description= $_GET['description'];
         $due= $_GET['due'];
@@ -38,10 +39,10 @@
     }
 
   
-    $currentCourse = $asm->edit($course_id);
+    $currentCourse = $asm->edit($assignment_id);
 
     if(isset($_POST['update'])){
-        $course->update($course_id,$_POST);
+        $asm->update($course_id,$_POST);
     }
     
 ?>
@@ -61,7 +62,7 @@
     <thead>
         <tr>
             <th style = "font-size:25px">Title</th>
-            <th style = "font-size:25px">Description</th>                    
+            <th style = "font-size:25px">Desc.</th>                    
             <th style = "font-size:25px">Course</th>                    
             <th style = "font-size:25px">Due</th>                    
             <th class ="actionclass" colspan = "2">Action</th>
@@ -100,8 +101,8 @@
     </tbody>
     </table>
     <form method="post" action ="">
-            <input type ="hidden" name="course_id" value="<?php echo $course_id; ?>">
-            <input type ="hidden" name="name" value="<?php echo $name; ?>">
+
+            <input type ="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
 
             <div class ="input-group">
                 <label>Assignment Title</label>
@@ -111,14 +112,15 @@
                 <input type="text" value="<?php echo $description; ?>" name="description">
 
                 <label>Course</label>
-                <select name = "selectProfessor">
+                <select name = "selectCourse">
                         <?php foreach($asm->courses() as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
                     
                         <?php } ?>
                 </select>   
                 <label>Due</label>
-                <input type="datetime-local" value="<?php echo $description; ?>" name="description">
+                <?php echo $due;?>
+                <input type="datetime-local" value="<?php echo $due; ?>" name="due">
             </div>
             
                 <div class ="input-group">

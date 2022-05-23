@@ -34,12 +34,15 @@ class AssignmentController{
         return $query->fetchAll();
     }
 
+    // request = $_POST[key=>value]
     public function store($request){
         
-        $query = $this->asm->pdo->prepare('INSERT INTO courses (name,semester, professor_id) VALUES (:name,:semester,:professor_id)');
-        $query->bindParam(':name', $request['coursename']);
-        $query->bindParam(':semester', $request['selectSemester']);
-        $query->bindParam(':professor_id', $request['selectProfessor']);
+        $query = $this->asm->pdo->prepare('INSERT INTO professor_assignment (title, description, professor_id, course_id, due) VALUES (:title,:description,:professor_id,:course_id, :due)');
+        $query->bindParam(':title', $request['title']);
+        $query->bindParam(':description', $request['description']);
+        $query->bindParam(':professor_id', $request['user_id']);
+        $query->bindParam(':course_id', $request['selectCourse']);
+        $query->bindParam(':due', $request['due']);
 
         $query->execute();
     
