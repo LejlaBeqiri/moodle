@@ -66,29 +66,27 @@
     </thead>
     <tbody>
 
-        <?php print_r($asm->all())?>
-        <?php foreach($asm->all() as $row ){ ?>
+        
+        <?php foreach($asm->all($_SESSION['user_id']) as $row ){ ?>
             <tr>
             <td><?php echo $row['title'] ?></td>
             <td>
                 <?php 
-                   $prof = $asm->professor($row['professor_id'])[0];
-      
-                   echo $prof['name'];
+        
+                   echo $row['description'];
 
                 ?>
             </td>
             <td>
             <?php 
-                echo $row['semester'];       
+                echo $row['name'];       
             ?>
             </td>
-            <td class ="editclass">
-                <a class ="edit_btn" href="coursepanel.php?edit=<?php echo $row['id']; ?>&name=<?php echo $row['name']?>&semester=<?php echo $row['semester'] ?>">Edit</a>
+            <td>
+                <?php echo $row['due'];?>
             </td>
-            <td class ="updateclass">
-            <a class ="del_btn" href="coursepanel.php?del=<?php echo $row['id']; ?>">Delete</a>
-            </td>
+
+
         </tr>
         <?php } ?>
         

@@ -5,7 +5,7 @@
 
 <?php 
   $adm ="";
-if($_SESSION['is_admin']==0){
+if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']==0){
     $adm="Manage Dashboard";}
     else{$adm="ADMIN Dashboard";}
   ?>
@@ -16,7 +16,7 @@ if($_SESSION['is_admin']==0){
 
 
         <ul>
-          <?php if($_SESSION['is_admin']==1){?>
+          <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']==1){?>
             <li><a href ="index.php">Home</a></li>
             <li><a href ="admindashboard.php">Dashboard</a></li>
             <li><a href ="userspanel.php">Users</a></li>

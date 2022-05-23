@@ -13,13 +13,14 @@ class AssignmentController{
     {
       
         $query = $this->asm->pdo->prepare('
-            SELECT *
-            FROM professor_assignment
-            INNER JOIN courses
-            ON professor_assignment.course_id = courses.id
-            WHERE professor_id = :user_id;
+            SELECT p.title, p.description, p.due, c.name
+            FROM professor_assignment p
+            INNER JOIN courses c
+            ON p.course_id = c.id
+            WHERE p.id = :user_id
         ');
-        $query->bindParam(':user_id', $user_id);
+         $query->bindParam(':user_id', $user_id);
+         $query->execute();
 
         return $query->fetchAll();
     }

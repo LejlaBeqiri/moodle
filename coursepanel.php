@@ -2,7 +2,7 @@
  include('includes/current_page.php');
 
     session_start();
-    if($_SESSION['role']==2){
+    if(isset($_SESSION['role']) && $_SESSION['role']==2){
         header("Location: ./index.php");
 
    }
