@@ -53,7 +53,19 @@ class AssignmentController{
         $query->execute(['id' => $id]);
 
         return $query->fetch();
-        }
+     }
+
+     public function show($id){
+        $query = $this->asm->pdo->prepare('
+        SELECT p.id, p.title, p.description, p.due, c.name
+        FROM professor_assignment p
+        INNER JOIN courses c
+        ON p.course_id = c.id
+        WHERE c.id = :id');
+        $query->execute(['id' => $id]);
+
+        return $query->fetch();
+     }
 
 
     public function update($assignment_id, $request)
