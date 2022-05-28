@@ -4,10 +4,11 @@
     { 
         session_start(); 
     } 
-    if(isset($_SESSION['role']) && $_SESSION['role']==2){
+    if((isset($_SESSION['role']) && $_SESSION['role']==2)||!isset($_SESSION['user_id'])){
         header("Location: ./index.php");
     }
 
+   
     $assignment_id='';
     $title= '';
     $description = '';

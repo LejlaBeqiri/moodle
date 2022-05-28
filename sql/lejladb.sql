@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `moodle`.`student_assignment` (
   `title` VARCHAR(255) NULL DEFAULT NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
   `score` INT(11) NULL DEFAULT NULL,
+   `semester` ENUM('1', '2', '3', '4', '5', '6') NOT NULL,
   `created_at` TIMESTAMP(2) NOT NULL DEFAULT CURRENT_TIMESTAMP(2) ON UPDATE CURRENT_TIMESTAMP(2),
   `professor_assignment_id` INT(11) NOT NULL,
   `evaluated` TINYINT(4) NULL DEFAULT NULL,
