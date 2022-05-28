@@ -222,6 +222,13 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
 
+INSERT INTO roles (role_name)
+VALUES ('Professor');
+
+INSERT INTO roles (role_name)
+VALUES ('Student');
+
+
 -- -----------------------------------------------------
 -- Table `moodle`.`posts_media`
 -- -----------------------------------------------------
