@@ -105,10 +105,11 @@ class AssignmentController{
     }
 
 
-    public function courses()
+    public function courses($id)
     {
-        $query = $this->asm->pdo->query('SELECT * FROM courses');
-
+        $query=$this->asm->pdo->prepare('SELECT * FROM courses where professor_id=:id');
+        $query->bindParam(':id', $id);
+        $query->execute();
         return $query->fetchAll();
     }
 

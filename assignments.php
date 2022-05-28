@@ -101,6 +101,10 @@
         
     </tbody>
     </table>
+    <?php 
+    
+    ?>
+ 
     <form method="post" action ="">
 
             <input type ="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
@@ -115,7 +119,9 @@
 
                 <label>Course</label>
                 <select name = "selectCourse">
-                        <?php foreach($asm->courses() as $row ){ ?>
+                        <?php
+    
+                         foreach($asm->courses($_SESSION['user_id']) as $row ){ ?>
                             <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
                     
                         <?php } ?>

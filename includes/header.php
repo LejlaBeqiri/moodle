@@ -33,7 +33,6 @@ session_start();
 
                 <?php if(isset($_SESSION['role']) && $_SESSION['role']== 1 ){?>
      
-                    <li><a href="courses.php">Courses</a></li>
                     <li><a href="assignments.php">Assignments</a></li>
                     <li><a href ="coursepanel.php">Course Panel</a></li>
                     <li><a href="profile.php">Profile</a></li>
