@@ -76,7 +76,7 @@
         <?php foreach($asm->all($_SESSION['user_id']) as $row ){ ?>
             <tr>
             <td><?php echo $row['title'] ?></td>
-            <td>
+            <td class="excerpt">
                 <?php 
                    echo $row['description'];
                 ?>
@@ -93,7 +93,10 @@
                 <a class ="edit_btn" href="assignments.php?edit=<?php echo $row['id']; ?>&title=<?php echo $row['title']?>&description=<?php echo $row['description'] ?> &due=<?php echo $row['due'] ?>">Edit</a>
             </td>   
             <td class ="updateclass">
-            <a class ="del_btn" href="assignments.php?del=<?php echo $row['id']; ?>">Delete</a>
+                <a class ="del_btn" href="assignments.php?del=<?php echo $row['id']; ?>">Delete</a>
+            </td>
+            <td class ="updateclass">
+                <a class ="btn" style="text-decoration:none;" href="assignments-single.php?id=<?php echo $row['id']; ?>">Show More</a>
             </td>
 
         </tr>
@@ -112,13 +115,13 @@
 
             <div class ="input-group">
                 <label>Assignment Title</label>
-                <input type="text" value="<?php echo $title; ?>" name="title">
+                <input required type="text" value="<?php echo $title; ?>" name="title">
 
                 <label> Description</label>
-                <input type="text" value="<?php echo $description; ?>" name="description">
+                <input required  type="text" value="<?php echo $description; ?>" name="description">
 
                 <label>Course</label>
-                <select name = "selectCourse">
+                <select required name = "selectCourse">
                         <?php
     
                          foreach($asm->courses($_SESSION['user_id']) as $row ){ ?>
@@ -128,7 +131,7 @@
                 </select>   
                 <label>Due</label>
                 <?php echo $due;?>
-                <input type="datetime-local" value="<?php echo $due; ?>" name="due">
+                <input required type="datetime-local" value="<?php echo $due; ?>" name="due">
             </div>
             
                 <div class ="input-group">

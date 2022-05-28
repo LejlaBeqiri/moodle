@@ -99,10 +99,10 @@
 
             <div class ="input-group">
                 <label>Course Title</label>
-                <input type="text" value="<?php echo $name; ?>" name="coursename">
-                 
+                <input required type="text" value="<?php echo $name; ?>" name="coursename">
+
                 <label>Semester</label>
-                <select name = "selectSemester">
+                <select required name = "selectSemester">
                     <option value="1">Semester 1</option>
                     <option value="2">Semester 2</option>
                     <option value="3">Semester 3</option>

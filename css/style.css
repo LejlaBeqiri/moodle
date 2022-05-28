@@ -39,6 +39,8 @@ h3{margin:0px;}
     height: 100%;
 }*/
 
+
+
 /*Buttons *******************************************/
 .button1{
     border: 1px solid #1a61ff;
@@ -568,4 +570,14 @@ form{
 }
 .updateclass{
     text-align:left;
+}
+
+
+.excerpt{
+    display: block;
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+      
 }
