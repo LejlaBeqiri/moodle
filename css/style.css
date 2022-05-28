@@ -581,3 +581,109 @@ form{
     text-overflow: ellipsis;
       
 }
+
+/*upload page*/
+
+
+.signIncontanier-upload{
+    display: flex;
+    flex-wrap:wrap;
+    width:100%;
+    justify-content: space-around;
+}
+.loginBox-upload{
+    width:430px;
+    padding-top: 100px;
+    
+}
+.uploadfilebox{
+    width: 525px;
+    display: flex;
+    padding-top: 100px;
+    justify-content: center;
+    
+}
+.back-upload{
+    width: 100%;
+    background-color: #1a61ff ; 
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    border-radius: 10px;
+}
+
+.back-upload img{
+    margin-top: 35px;
+    margin-bottom: 25px;
+    width: 40%;
+    border-radius: 50%;
+    border: solid #fff 5px;
+}
+.form-upload{
+    padding: 50px;
+    color: white;
+}
+
+.back-upload h3{
+    color: white;
+    font-family: 'Segoe UI';
+    font-size: 25px;
+}
+.back-upload p{
+    color: white;
+    font-family: 'Segoe UI';
+    font-size: 20px;
+    margin-bottom:25px;
+}
+
+.uploadForm .input{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    height: 30px;
+    border:solid 2px #1a61ff;
+    font-size:20px;
+    color:black;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: left;
+    transition:all 250ms ease;
+}
+.uploadForm h1{
+    margin-top: 0;
+    margin-bottom: 20px;
+    
+}
+.uploaddescription{
+    margin: 16px 0;
+    margin-bottom: 30px;
+    text-align:left;
+    width:47%; 
+    padding: 20px;
+    outline:none;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid #1a61ff ; 
+    font-size: 20px;
+    border-radius:3px;
+}
+
+.submitupload-button{
+    border: 1px solid #1a61ff;
+    padding: 11px 18px;
+    background-color: #1a61ff;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 50%;
+}
+.submitupload-button:hover{
+    border:1px solid #1a61ff;
+    background-color:white;
+    color:#1a61ff;
+}

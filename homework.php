@@ -1,0 +1,79 @@
+<?php
+ include('includes/current_page.php');
+ include('./includes/header.php');
+ if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+
+if(isset($_SESSION['role']) && $_SESSION['role']==1){
+    header("Location: ./index.php");
+}
+require './controllers/Homework/HomeworkController.php';
+
+$hw = new Homework;
+
+?>
+ 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <script src="./js/jquery-3.6.0.min.js"></script>
+
+    </head>
+    <body>
+
+            <div class="signIncontanier-upload">
+
+                <div class="loginBox-upload">
+                    
+                    <div class="back-upload">
+                        
+                        <img src="images/student3.png" alt="User">
+                        
+                        <h3>Your Profile</h3>
+                        
+                        <p><?php echo $_SESSION['email'];
+                        ?></p>
+
+                    </div>
+                </div>
+
+    
+                <div class="uploadfilebox">
+                <form class="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+                    <h1>Upload Your Homework Here</h1>
+                    <label>User</label><br>
+                    <input readonly class="input" type="text" name="user" value ="<?php echo $_SESSION['email'];?>"><br><br>
+                    
+                    <label>Course</label>
+                    <select required name = "selectCourse">
+                            <?php
+        
+                            foreach($hw->get_assignments() as $row ){ ?>
+                                <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
+                        
+                            <?php } ?>
+                    </select>   
+          
+                    
+                    <label>Choose File</label><br>
+                        <input class="input" type="file" name="file"><br>
+                    <label>Title it</label><br>
+                        <input class="input" type="text" name="title"><br>
+                        <textarea maxlength="500" name="description" class="uploaddescription"placeholder="Your Description" ></textarea><br>
+                    <button name="submit" class="submitupload-button" type="submit" value="submit">Submit</button>
+                </form>
+
+                
+                </div>
+            </div>
+
+            <?php include('includes/footer.php');?>
+
+    </body>
+
+</html>
