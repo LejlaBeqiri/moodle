@@ -27,6 +27,12 @@ class AssignmentController{
         return $query->fetchAll();
     }
 
+    public function get_assignments_from_course($id){
+        $query=$this->asm->pdo->prepare('SELECT * FROM professor_assignment where course_id=:id');
+        $query->bindParam(':id', $id);
+        $query->execute();
+        return $query->fetchAll();
+    }   
 
     public function get_courses($id){
         $query=$this->asm->pdo->prepare('SELECT * FROM courses where semester=:sem');

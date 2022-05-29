@@ -5,7 +5,7 @@
     { 
         session_start(); 
     } 
-    if((isset($_SESSION['role']) && $_SESSION['role']==2)||!isset($_SESSION['user_id'])){
+    if(!isset($_SESSION['user_id'])){
         header("Location: ./index.php");
     }
 

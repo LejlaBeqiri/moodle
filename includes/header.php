@@ -49,7 +49,7 @@
                     <li><a href="homework.php">Homework</a></li>
                     <li><a href="homework_upload.php">Upload Homework</a></li>
                     <li><a href="profile.php">Profile</a></li>
-                    <li><a href="faq.php">FAQ</a></li>
+                    <li><a href="#">FAQ</a></li>
                 <?php }?>
 
                 <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']==1){?>

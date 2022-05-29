@@ -17,6 +17,12 @@ class CourseController{
         return $query->fetchAll();
     }
 
+    public function allCourses(){
+        $query = $this->course->pdo->prepare('SELECT * FROM courses');
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function get_courses($id){
         $query=$this->course->pdo->prepare('SELECT * FROM courses where semester=:sem');
         $query->bindParam(':sem', $id);
