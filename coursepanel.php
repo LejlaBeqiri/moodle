@@ -66,7 +66,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($course->all() as $row ){ ?>
+        <?php foreach($course->all($_SESSION['user_id']) as $row ){ ?>
             <tr>
                 <td><?php echo $row['name'] ?></td>
                 <td>

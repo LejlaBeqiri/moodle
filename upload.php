@@ -1,89 +1,69 @@
 <?php
- include('includes/current_page.php');
- include('./includes/header.php');
- if(!isset($_SESSION)) { 
-        session_start(); 
-    } 
+session_start();
+// Include the database configuration file
+require_once './core/Database.php';
 
-if(isset($_SESSION['role']) && $_SESSION['role']==1){
-    header("Location: ./index.php");
+$db = new Database;
+
+$statusMsg = '';
+
+// File upload path
+$targetDir = "uploads/assignment_media/";
+$fileName = basename($_FILES["file"]["name"]);
+$targetFilePath = $targetDir . $fileName;
+$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+$row = $db->pdo->prepare("SELECT 1 FROM assignment_media WHERE id=?");
+$row->execute([$fileName]);
+$fileExists= $row->fetchColumn();
+
+
+// $query = $db->pdo->prepare('SELECT course_id from courses where title =:t');
+//         $query->bindParam(':t', $_POST['selectCourse']);
+//         $query->execute();
+//         $ctemp = $query->fetchAll();
+//         $cres =$ctemp['0']['0'];
+     
+//         $course_id=$cres;
+
+if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"]&& !$fileExists)){
+
+         // Allow certain file formats
+    $allowTypes = array('jpg','png','jpeg','gif','pdf');
+    if(in_array($fileType, $allowTypes)){
+        // Upload file to server
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+            
+        
+            $query = $db->pdo->prepare('INSERT INTO student_assignment (student_id, title, description, semester, professor_assignment_id, file) VALUES (:student_id, :title, :description, :semester, :professor_assignment_id, :file)');
+            $query->bindParam(':student_id', $_SESSION['user_id']);
+            $query->bindParam(':title', $_POST['title']);
+            $query->bindParam(':description', $_POST['description']);
+            $query->bindParam(':semester', $_POST['selectSemester']);
+            $query->bindParam(':professor_assignment_id', $_POST['selectAssignment']);
+            $query->bindParam(':file', $fileName);
+
+            $query->execute();
+            if($query){
+                $statusMsg = "The file ".$fileName. " has been uploaded successfully.";
+            }else{
+                $statusMsg = "File upload failed, please try again.";
+            } 
+        }else{
+            $statusMsg = "Sorry, there was an error uploading your file.";
+        }
+    }else{
+        $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+    }
+
+   
+}else{
+    $statusMsg = 'Please select a file to upload or there is already a file with that name';
 }
-require './controllers/Homework/HomeworkController.php';
 
-$hw = new Homework;
+// Display status message
+$_SESSION['status_msg'] = $statusMsg;
+
+header('Location: ./homework_upload.php');
 
 ?>
- 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Upload</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-        <script src="./js/jquery-3.6.0.min.js"></script>
-
-    </head>
-    <body>
-
-
-            <div class="signIncontanier-upload">
-
-                <div class="loginBox-upload">
-                    
-                    <div class="back-upload">
-                        
-                        <img src="images/student3.png" alt="User">
-                        
-                        <h3>Your Profile</h3>
-                        
-                        <p><?php echo $_SESSION['email'];
-                        ?></p>
-
-                    </div>
-                </div>
-
-    
-                <div class="uploadfilebox">
-                <form class="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
-                    <h1>Upload Your Homework Here</h1>
-                    <label>User</label><br>
-                    <input readonly class="input" type="text" value ="<?php echo $_SESSION['email'];?>"><br><br>
-                    
-                    <label>Assignment</label>
-                    <select class="input" required name = "selectAssignment">
-                            <?php
-        
-                            foreach($hw->all() as $row ){ ?>
-                                <option value="<?php echo $row['id'] ;?>"><?php echo $row['title']?></option>
-                        
-                            <?php } ?>
-                    </select>   
-                    <label>Semester</label>
-                    <select class="input" required name = "selectSemester">
-                        <option value="1">Semester 1</option>
-                        <option value="2">Semester 2</option>
-                        <option value="3">Semester 3</option>
-                        <option value="4">Semester 4</option>
-                        <option value="5">Semester 5</option>
-                        <option value="6">Semester 6</option>
-                    </select>
-          
-                    
-                    <label>Choose File</label><br>
-                        <input class="input" type="file" name="file"><br>
-                    <label>Title</label><br>
-                        <input class="input" type="text" name="title"><br>
-                        <textarea maxlength="500" name="description" class="uploaddescription"placeholder="Describe your work" ></textarea><br>
-                    <button name="submit" class="submitupload-button" type="submit" value="submit">Submit</button>
-                </form>
-
-                
-                </div>
-            </div>
-
-            <?php include('includes/footer.php');?>
-
-    </body>
-
-</html>

@@ -9,10 +9,11 @@ class CourseController{
         $this->course = new Database;
     }
 
-    public function all()
+    public function all($id)
     {
-        $query = $this->course->pdo->query('SELECT * FROM courses');
-
+        $query = $this->course->pdo->prepare('SELECT * FROM courses where professor_id = :id');
+        $query->bindParam(':id', $id);
+        $query->execute();
         return $query->fetchAll();
     }
 

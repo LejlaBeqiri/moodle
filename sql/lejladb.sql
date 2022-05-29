@@ -119,8 +119,9 @@ CREATE TABLE IF NOT EXISTS `moodle`.`student_assignment` (
   `title` VARCHAR(255) NULL DEFAULT NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
   `score` INT(11) NULL DEFAULT NULL,
-   `semester` ENUM('1', '2', '3', '4', '5', '6') NOT NULL,
+  `semester` ENUM('1', '2', '3', '4', '5', '6') NOT NULL,
   `professor_assignment_id` INT(11) NOT NULL,
+  `file` VARCHAR(255) NULL DEFAULT NULL,
   `evaluated` TINYINT(4) NULL DEFAULT NULL,
     `created_at` TIMESTAMP(2) NOT NULL DEFAULT CURRENT_TIMESTAMP(2) ON UPDATE CURRENT_TIMESTAMP(2),
   PRIMARY KEY (`id`),
@@ -140,26 +141,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
-
--- -----------------------------------------------------
--- Table `moodle`.`assignment_media`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `moodle`.`assignment_media` ;
-
-CREATE TABLE IF NOT EXISTS `moodle`.`assignment_media` (
-  `id` VARCHAR(191) NOT NULL,
-  `student_assignment_id` INT(11) NOT NULL,
-  `created_at` TIMESTAMP(2) NULL  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  INDEX `fk_media_student_assignment1_idx` (`student_assignment_id` ASC)  ,
-  CONSTRAINT `fk_media_student_assignment10`
-    FOREIGN KEY (`student_assignment_id`)
-    REFERENCES `moodle`.`student_assignment` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
 
 
 -- -----------------------------------------------------
@@ -227,6 +208,35 @@ VALUES ('Professor');
 
 INSERT INTO roles (role_name)
 VALUES ('Student');
+
+
+INSERT INTO users (name, last_name, email, password, document_id, role_id)
+VALUES ('Lejla', 'Beqiri', 'lejla@email.com', '$2y$10$n8c.0q/MdPZyIFeHaX4pFOddPVf9uaTZPZhQWhl0Sa/MNqvm0KrdG', '123321', 1);
+
+INSERT INTO users (name, last_name, email, password, document_id, role_id)
+VALUES ('Drin', 'Beqiri', 'drin@email.com', '$2y$10$n8c.0q/MdPZyIFeHaX4pFOddPVf9uaTZPZhQWhl0Sa/MNqvm0KrdG', '123321', 1);
+
+INSERT INTO users (name, last_name, email, password, document_id, role_id)
+VALUES ('Filan', 'Fisteku', 'filan@email.com', '$2y$10$n8c.0q/MdPZyIFeHaX4pFOddPVf9uaTZPZhQWhl0Sa/MNqvm0KrdG', '123321', 2);
+
+
+
+INSERT INTO courses (name, semester, professor_id)
+VALUES ('Math1', '1', 1);
+
+INSERT INTO courses (name, semester, professor_id)
+VALUES ('Math2', '2', 1);
+
+INSERT INTO courses (name, semester, professor_id)
+VALUES ('Database', '2', 2);
+
+INSERT INTO courses (name, semester, professor_id)
+VALUES ('SO', '2', 2);
+
+INSERT INTO courses (name, semester, professor_id)
+VALUES ('Algorithms', '3', 2);
+
+
 
 
 -- -----------------------------------------------------
