@@ -9,20 +9,9 @@ class Homework{
         $this->asm = new Database;
     }
 
-    public function all($user_id)
+    public function all()
     {
-      
-        $query = $this->asm->pdo->prepare('
-            SELECT p.id, p.title, p.description, p.due, c.name
-            FROM professor_assignment p
-            INNER JOIN courses c
-            ON p.course_id = c.id
-            WHERE p.professor_id = :user_id
-        ');
-
-        
-         $query->bindParam(':user_id', $user_id);
-         $query->execute();
+        $query = $this->asm->pdo->query('SELECT id, title FROM professor_assignment');
 
         return $query->fetchAll();
     }

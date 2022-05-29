@@ -26,6 +26,7 @@ $hw = new Homework;
     </head>
     <body>
 
+
             <div class="signIncontanier-upload">
 
                 <div class="loginBox-upload">
@@ -47,14 +48,14 @@ $hw = new Homework;
                 <form class="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
                     <h1>Upload Your Homework Here</h1>
                     <label>User</label><br>
-                    <input readonly class="input" type="text" name="user" value ="<?php echo $_SESSION['email'];?>"><br><br>
+                    <input readonly class="input" type="text" value ="<?php echo $_SESSION['email'];?>"><br><br>
                     
-                    <label>Course</label>
-                    <select required name = "selectCourse">
+                    <label>Assignment</label>
+                    <select class="input" required name = "selectAssignment">
                             <?php
         
-                            foreach($hw->get_assignments() as $row ){ ?>
-                                <option value="<?php echo $row['id'] ;?>"><?php echo $row['name']?></option>
+                            foreach($hw->all() as $row ){ ?>
+                                <option value="<?php echo $row['id'] ;?>"><?php echo $row['title']?></option>
                         
                             <?php } ?>
                     </select>   
@@ -62,9 +63,9 @@ $hw = new Homework;
                     
                     <label>Choose File</label><br>
                         <input class="input" type="file" name="file"><br>
-                    <label>Title it</label><br>
+                    <label>Title</label><br>
                         <input class="input" type="text" name="title"><br>
-                        <textarea maxlength="500" name="description" class="uploaddescription"placeholder="Your Description" ></textarea><br>
+                        <textarea maxlength="500" name="description" class="uploaddescription"placeholder="Describe your work" ></textarea><br>
                     <button name="submit" class="submitupload-button" type="submit" value="submit">Submit</button>
                 </form>
 
