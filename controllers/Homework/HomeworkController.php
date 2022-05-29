@@ -47,6 +47,16 @@ class Homework{
         return $query->fetchColumn();
     }
 
+    public function update($assignment_id, $request)
+    {
+      
+        $query = $this->asm->pdo->prepare('UPDATE student_assignment SET score = :score, evaluated = 1 WHERE id = :id');
+        $query->bindParam(':id', $assignment_id);
+        $query->bindParam(':score', $request['score']);
+        
+        $query->execute();
+    }
+
 
     public function destroy($cid)
     {

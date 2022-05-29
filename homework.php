@@ -16,13 +16,11 @@
     $hw = new Homework;
     $homeworks = $hw->myHomework($_SESSION['user_id']);
 
-    $score=0;
     $assignment_title= '';
     $student_id= '';
     $user = null;
     if(isset($_GET['edit'])){
         $asm_id = $_GET['edit'];
-        $score= $_GET['score'];
         $student_id= $_GET['student_id'];
         $assignment_title= $_GET['assignment_title'];
         $user = $hw->user($student_id)[0];
@@ -32,6 +30,13 @@
     if(isset($_GET['del'])){
         $hw->destroy($_GET["del"]);
         header('Location: ./homework.php');
+    }
+
+    if(isset($_POST['update'])){
+
+        $hw->update($asm_id,$_POST);
+        header('Location: ./homework.php');
+
     }
 
 
@@ -110,23 +115,22 @@
                 <td class ="updateclass">
                     <a class ="del_btn" style="padding:17px 5px;" href="homework.php?del=<?php echo $row['id']; ?>">Delete</a>
                 </td>
-                <td class ="updateclass">
-                    <a class ="btn" style="padding:17px 5px;" href="homework.php?edit=<?php echo $row['id']; ?>&assignment_title=<?php echo $row['title'] ?>&score=<?php echo $row['score'] ?>&student_id=<?php echo $row['student_id'] ?>">Edit</a>
-                </td>
+                <?php if($_SESSION['role'] == 1){?>
+                    <td class ="updateclass">
+                        <a class ="btn" style="padding:17px 5px;" href="homework.php?edit=<?php echo $row['id']; ?>&assignment_title=<?php echo $row['title'] ?>&score=<?php echo $row['score'] ?>&student_id=<?php echo $row['student_id'] ?>">Edit</a>
+                    </td>
+                <?php }?>
 
             </tr>
         <?php } ?>
         
     </tbody>
     </table>
-
+    <?php if($_SESSION['role'] == 1){?>
     <form method="post" action ="">
-            <input type ="hidden" name="selectProfessor" value="<?php echo $_SESSION['user_id']; ?>">
-            <input type ="hidden" name="name" value="<?php echo $score; ?>">
-
             <div class ="input-group">
                 <label>Score</label>
-                <input required type="text" value="<?php echo $score; ?>" name="score">
+                <input type="number" value="<?php echo $score; ?>" name="score">
                 <label>Student</label>
                 <input disabled placeholder=<?php
                  if(isset($user)){
@@ -144,7 +148,7 @@
                 <button type="submit" name="update" class="btn">Update</button>
             </div>
      </form>
-
+<?php } ?>
 
 </body>
 </html>
