@@ -612,6 +612,7 @@ form{
     align-items: center;
     align-content: center;
     border-radius: 10px;
+    padding:35px;
 }
 
 .back-upload img{

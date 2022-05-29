@@ -24,6 +24,7 @@ $hw = new Homework;
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <script src="./js/jquery-3.6.0.min.js"></script>
 
+
     </head>
     <body>
 
@@ -40,6 +41,7 @@ $hw = new Homework;
                         
                         <p><?php echo $_SESSION['name'] .' ' . $_SESSION['last_name'];?></p>
                         <p><?php echo $_SESSION['email'];?></p>
+                        <p id="quote"></p>
 
                         
 
@@ -51,5 +53,26 @@ $hw = new Homework;
 
   
     </body>
+    <script>
+      
+        
+        $( document ).ready(function() {
+            const quote = document.getElementById('quote');
+            const settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://type.fit/api/quotes",
+            "method": "GET"
+            }
+
+            $.ajax(settings).done(function (response) {
+            let number = Math.floor(Math.random() * 1600)
+            const data = JSON.parse(response);
+            quote.innerHTML = data[number].text;
+        });
+        });
+
+
+    </script>
 
 </html>
