@@ -12,7 +12,7 @@ class Homework{
     public function myHomework($user_id)
     {
         $query = $this->asm->pdo->prepare('
-            SELECT sa.title, sa.description, sa.score, sa.semester, sa.file, sa.evaluated, professor_assignment.course_id
+            SELECT sa.id, sa.student_id, sa.title, sa.description, sa.score, sa.semester, sa.file, sa.evaluated, professor_assignment.course_id
             FROM (student_assignment sa
                 INNER JOIN professor_assignment ON sa.professor_assignment_id = professor_assignment.id)
 
@@ -47,87 +47,24 @@ class Homework{
         return $query->fetchColumn();
     }
 
-    // request = $_POST[key=>value]
-    public function store($request){
-        
-        $query = $this->asm->pdo->prepare('INSERT INTO professor_assignment (title, description, professor_id, course_id, due) VALUES (:title,:description,:professor_id,:course_id, :due)');
-        $query->bindParam(':title', $request['title']);
-        $query->bindParam(':description', $request['description']);
-        $query->bindParam(':professor_id', $request['user_id']);
-        $query->bindParam(':course_id', $request['selectCourse']);
-        $query->bindParam(':due', $request['due']);
-
-        $query->execute();
-    
-    }
-
-    public function edit($id){
-        $query = $this->asm->pdo->prepare('SELECT * FROM professor_assignment WHERE id = :id');
-        $query->execute(['id' => $id]);
-
-        return $query->fetch();
-     }
-
-     public function show($id){
-        $query = $this->asm->pdo->prepare('
-        SELECT p.id, p.title, p.description, p.due, c.name
-        FROM professor_assignment p
-        INNER JOIN courses c
-        ON p.course_id = c.id
-        WHERE c.id = :id');
-        $query->execute(['id' => $id]);
-
-        return $query->fetch();
-     }
-
-
-    public function update($assignment_id, $request)
-    {
-      
-        $query = $this->asm->pdo->prepare('UPDATE professor_assignment SET title = :title, description =:description, professor_id =:professor_id, course_id=:course_id, due=:due  WHERE id = :id');
-        $query->bindParam(':title', $request['title']);
-        $query->bindParam(':description', $request['description']);
-        $query->bindParam(':professor_id', $request['user_id']);
-        $query->bindParam(':course_id', $request['selectCourse']);
-        $query->bindParam(':due', $request['due']);
-        $query->bindParam(':id', $assignment_id);
-
-       
-        $query->execute();
-
-        return header('Location: ./assignments.php');
-    }
-
 
     public function destroy($cid)
     {
-        $query = $this->asm->pdo->prepare('DELETE FROM professor_assignment WHERE id = :cid');
+        $query = $this->asm->pdo->prepare('DELETE FROM student_assignment WHERE id = :cid');
         $query->execute(['cid' => $cid]);
 
         
         return header('Location: ./coursepanel.php');
     }
 
-    public function professor($id){
+    public function user($id){
         $query=$this->asm->pdo->prepare('SELECT name FROM users where id=:id');
         $query->bindParam(':id', $id);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function professors()
-    {
-        $query = $this->asm->pdo->query('SELECT * FROM users WHERE role_id = 1');
 
-        return $query->fetchAll();
-    }
-
-    public function students()
-    {
-        $query = $this->asm->pdo->query('SELECT * FROM users WHERE role_id = 1');
-
-        return $query->fetchAll();
-    }
 
 
     public function courses($id)
@@ -137,7 +74,32 @@ class Homework{
         $query->execute();
         return $query->fetchAll();
     }
+    
+    public function search($request){
 
+        $query = $this->asm->pdo->prepare('
+            SELECT sa.id, sa.title, sa.description, sa.score, sa.semester, sa.file, sa.evaluated, professor_assignment.course_id
+            FROM (student_assignment sa
+                INNER JOIN professor_assignment ON sa.professor_assignment_id = professor_assignment.id)
+                WHERE semester = :semester
+
+        ');
+
+        $query->bindParam(':semester', $request);
+        $query->execute();
+
+        return $query->fetchAll();
+    
+   
+
+    }
+
+
+    public function get_all_courses(){
+        $query=$this->asm->pdo->prepare('SELECT * FROM courses');
+        $query->execute();
+        return $query->fetchAll();
+    }
 
 
 }

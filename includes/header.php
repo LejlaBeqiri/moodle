@@ -1,9 +1,9 @@
 <?php include('includes/current_page.php');
+ if(!isset($_SESSION)) { 
+    session_start(); 
+} 
 
-session_start();
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -35,6 +35,7 @@ session_start();
      
                     <li><a href="assignments.php">Assignments</a></li>
                     <li><a href ="coursepanel.php">Course Panel</a></li>
+                    <li><a href="homework.php">Homework</a></li>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="faq.php">FAQ</a></li>
 

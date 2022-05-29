@@ -62,6 +62,8 @@ class AuthController
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_admin'] = $user['admin'];
             $_SESSION['role'] = $user['role_id'];
+            
+
         
             header("Location: ./index.php");
         }

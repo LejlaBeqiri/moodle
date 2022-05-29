@@ -1,19 +1,41 @@
 <?php
- include('includes/current_page.php');
+    include('includes/current_page.php');
 
-    if(isset($_SESSION['role']) && $_SESSION['role']==2){
+
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+
+    if(!isset($_SESSION['user_id'])){
         header("Location: ./index.php");
+    }
 
-   }
-?>
-
-<?php 
-    $name = '';
-    $edit_state = false;
     require './controllers/Homework/HomeworkController.php';
 
-    
+        
     $hw = new Homework;
+    $homeworks = $hw->myHomework($_SESSION['user_id']);
+
+    $score=0;
+    $assignment_title= '';
+    $student_id= '';
+    $user = null;
+    if(isset($_GET['edit'])){
+        $asm_id = $_GET['edit'];
+        $score= $_GET['score'];
+        $student_id= $_GET['student_id'];
+        $assignment_title= $_GET['assignment_title'];
+        $user = $hw->user($student_id)[0];
+      
+    }
+    
+    if(isset($_GET['del'])){
+        $hw->destroy($_GET["del"]);
+        header('Location: ./homework.php');
+    }
+
+
+    
 
     
 ?>
@@ -27,9 +49,11 @@
 
     </head>
 <body>
-
-
 <?php include('includes/header.php');?>
+
+
+
+
 <table style="width: 85%;">
     <thead>
         <tr>
@@ -37,15 +61,15 @@
             <th style = "font-size:25px">Desc.</th>                    
             <th style = "font-size:25px">Score</th>                    
             <th style = "font-size:25px">Semester</th>                    
-            <th style = "font-size:25px">Course</th>                    
-            <th style = "font-size:25px">File</th>                    
+            <th style = "font-size:25px">Course</th>       
             <th style = "font-size:25px">Evaluated</th>                    
+            <th style = "font-size:25px">File</th>                    
             <th class ="actionclass" >Action</th>
         </tr>
     </thead>
     <tbody>
 
-        <?php foreach($hw->myHomework($_SESSION['user_id']) as $row ){ ?>
+        <?php foreach( $homeworks as $row ){ ?>
             <tr>
                 <td><?php echo $row['title'] ?></td>
                 <td>
@@ -71,22 +95,23 @@
                 </td>
                 <td>
                     <?php 
-                        echo $row['file'];       
-                    ?>
-                </td>
-                <td>
-                    <?php 
                         echo $row['evaluated'];       
                     ?>
                 </td>
-                
                 <td>
-
                     <a class='button2' href="<?php
-                     $imageURL= 'uploads/assignment_media/'. $row['file'];
-                     echo $imageURL;
-                     ?> 
-                     "target="_blank">View File</a>
+                        $imageURL= 'uploads/assignment_media/'. $row['file'];
+                        echo $imageURL;
+                        ?> 
+                        "target="_blank"><?php echo $row['file'];?></a>
+                </td>
+   
+
+                <td class ="updateclass">
+                    <a class ="del_btn" style="padding:17px 5px;" href="homework.php?del=<?php echo $row['id']; ?>">Delete</a>
+                </td>
+                <td class ="updateclass">
+                    <a class ="btn" style="padding:17px 5px;" href="homework.php?edit=<?php echo $row['id']; ?>&assignment_title=<?php echo $row['title'] ?>&score=<?php echo $row['score'] ?>&student_id=<?php echo $row['student_id'] ?>">Edit</a>
                 </td>
 
             </tr>
@@ -94,6 +119,32 @@
         
     </tbody>
     </table>
+
+    <form method="post" action ="">
+            <input type ="hidden" name="selectProfessor" value="<?php echo $_SESSION['user_id']; ?>">
+            <input type ="hidden" name="name" value="<?php echo $score; ?>">
+
+            <div class ="input-group">
+                <label>Score</label>
+                <input required type="text" value="<?php echo $score; ?>" name="score">
+                <label>Student</label>
+                <input disabled placeholder=<?php
+                 if(isset($user)){
+                     echo $user['name'];
+                 }
+                 else{echo '';}
+                 
+                 ?>>
+                <label>Assignment Title</label>
+                <input disabled placeholder=<?php echo $assignment_title;?>>
+
+            </div>
+            
+            <div class ="input-group">
+                <button type="submit" name="update" class="btn">Update</button>
+            </div>
+     </form>
+
 
 </body>
 </html>

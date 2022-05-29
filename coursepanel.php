@@ -120,5 +120,5 @@
                     <?php endif ?>
                 </div>
             </form>
+            </html>
 </body>
-</html>
