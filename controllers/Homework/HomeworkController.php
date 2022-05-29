@@ -15,10 +15,11 @@ class Homework{
             SELECT sa.id, sa.student_id, sa.title, sa.description, sa.score, sa.semester, sa.file, sa.evaluated, professor_assignment.course_id
             FROM (student_assignment sa
                 INNER JOIN professor_assignment ON sa.professor_assignment_id = professor_assignment.id)
+                WHERE sa.student_id = :user_id
 
         ');
 
-        //  $query->bindParam(':user_id', $user_id);
+         $query->bindParam(':user_id', $user_id);
          $query->execute();
 
         return $query->fetchAll();

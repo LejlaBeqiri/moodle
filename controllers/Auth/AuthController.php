@@ -54,7 +54,8 @@ class AuthController
             $_SESSION['is_admin'] = $user['admin'];
             header("Location: ./index.php");
         }
-
+        // if login not successfull
+        // throw AUthException
         if( $user && password_verify($request['password'], $user['password']) && $user['admin']==0){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['name'] = $user['name'];
