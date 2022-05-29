@@ -61,7 +61,7 @@ class AssignmentController{
         FROM professor_assignment p
         INNER JOIN courses c
         ON p.course_id = c.id
-        WHERE c.id = :id');
+        WHERE p.id = :id');
         $query->execute(['id' => $id]);
 
         return $query->fetch();

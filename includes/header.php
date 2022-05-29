@@ -45,8 +45,7 @@ session_start();
                     
                     <li><a href="index.php">Home</a></li>
                     <li><a href="courses.php">Courses</a></li>
-                    <li><a href="homework.php">Homework</a></li>
-                    <li><a href="upload.php">Upload</a></li>
+                    <li><a href="upload.php">Upload Homework</a></li>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="faq.php">FAQ</a></li>
                 <?php }?>
