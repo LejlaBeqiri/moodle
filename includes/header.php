@@ -30,7 +30,7 @@ session_start();
         <nav>
             <ul>
                 <?php ?>
-
+                    <!-- Nese useri eshte Profesor -->
                 <?php if(isset($_SESSION['role']) && $_SESSION['role']== 1 ){?>
      
                     <li><a href="assignments.php">Assignments</a></li>
@@ -40,11 +40,12 @@ session_start();
 
 
                 <?php }?>
-
+                <!-- Nese useri eshte student -->
                 <?php if(isset($_SESSION['role']) && $_SESSION['role']== 2 ){?>
                     
                     <li><a href="index.php">Home</a></li>
                     <li><a href="courses.php">Courses</a></li>
+                    <li><a href="homework.php">Homework</a></li>
                     <li><a href="homework_upload.php">Upload Homework</a></li>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="faq.php">FAQ</a></li>

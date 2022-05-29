@@ -60,7 +60,7 @@ $hw = new Homework;
                     <select class="input" required name = "selectAssignment">
                             <?php
         
-                            foreach($hw->all() as $row ){ ?>
+                            foreach($hw->allAssignments() as $row ){ ?>
                                 <option value="<?php echo $row['id'] ;?>"><?php echo $row['title']?></option>
                         
                             <?php } ?>
@@ -88,8 +88,7 @@ $hw = new Homework;
                 </div>
             </div>
 
-            <?php include('includes/footer.php');?>
-
+  
     </body>
 
 </html>

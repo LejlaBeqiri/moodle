@@ -9,17 +9,42 @@ class Homework{
         $this->asm = new Database;
     }
 
-    public function all()
+    public function myHomework($user_id)
     {
-        $query = $this->asm->pdo->query('SELECT id, title FROM professor_assignment');
+        $query = $this->asm->pdo->prepare('
+            SELECT sa.title, sa.description, sa.score, sa.semester, sa.file, sa.evaluated, professor_assignment.course_id
+            FROM (student_assignment sa
+                INNER JOIN professor_assignment ON sa.professor_assignment_id = professor_assignment.id)
+
+        ');
+
+        //  $query->bindParam(':user_id', $user_id);
+         $query->execute();
 
         return $query->fetchAll();
     }
 
-    public function get_assignments(){
-        $query=$this->asm->pdo->prepare('SELECT id FROM professor_assignment');
-        $query->execute();
+    public function allAssignments()
+    {
+      
+        $query = $this->asm->pdo->prepare('
+            SELECT p.id, p.title, p.description, p.due, c.name
+            FROM professor_assignment p
+            INNER JOIN courses c
+            ON p.course_id = c.id
+        ');
+
+         $query->execute();
+
         return $query->fetchAll();
+    }
+
+
+    public function get_course($id){
+        $query=$this->asm->pdo->prepare('SELECT name FROM courses where id =:id');
+        $query->bindParam('id', $id);
+        $query->execute();
+        return $query->fetchColumn();
     }
 
     // request = $_POST[key=>value]

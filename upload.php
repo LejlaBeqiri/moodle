@@ -13,9 +13,7 @@ $fileName = basename($_FILES["file"]["name"]);
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 
-$row = $db->pdo->prepare("SELECT 1 FROM assignment_media WHERE id=?");
-$row->execute([$fileName]);
-$fileExists= $row->fetchColumn();
+
 
 
 // $query = $db->pdo->prepare('SELECT course_id from courses where title =:t');
@@ -26,7 +24,7 @@ $fileExists= $row->fetchColumn();
      
 //         $course_id=$cres;
 
-if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"]&& !$fileExists)){
+if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 
          // Allow certain file formats
     $allowTypes = array('jpg','png','jpeg','gif','pdf');
